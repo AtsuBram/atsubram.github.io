@@ -1,0 +1,258 @@
+<!-- start Tostie part -->
+<div id="tostieSection">
+    <div class="col-lg-12 col-sm-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                    <span>Tosties<button type="button" class="btn btn-success pull-right"
+                                                                 data-toggle="modal"
+                                                                 data-target="#add-tostie">+</button></span>
+                <!-- Trigger the add tostie modal-->
+            </div>
+            <div class="panel-body">
+                <div class="row hidden-xs">
+                    <div class="col-lg-3 col-sm-3">
+                        <span><strong>Naam</strong></span>
+                    </div>
+                    <div class="col-lg-4 col-sm-4">
+                        <span><strong>ingredienten</strong></span>
+                    </div>
+                    <div class="col-lg-2 col-sm-2">
+                        <span><strong>sausen</strong></span>
+                    </div>
+                    <div class="col-lg-3 col-sm-3">
+                        <span><strong>seizoen</strong></span>
+                    </div>
+                    <hr>
+                </div>
+                <div class="row" ng-repeat="tostie in tosties track by $index">
+                    <div class="col-lg-3 col-sm-3">
+                        <strong class="hidden-sm hidden-md hidden-lg">Naam:</strong>
+                        <span>{{tostie.name | replaceTest}}</span>
+                    </div>
+                    <div class="col-lg-3 col-sm-3">
+                        <strong class="hidden-sm hidden-md hidden-lg">Ingredienten:</strong>
+                        <span>
+                        <div ng-repeat="ingredient in tostie.ingredients">
+                            {{ingredient}}
+                        </div>
+                        </span>
+                    </div>
+                    <div class="col-lg-2 col-sm-2">
+                        <strong class="hidden-sm hidden-md hidden-lg">Saus:</strong>
+                        <span>
+                        <dic ng-repeat="saus in tostie.sauce">{{saus}} </dic>
+                        </span>
+                    </div>
+                    <div class="col-lg-2 col-sm-2">
+                        <strong class="hidden-sm hidden-md hidden-lg">Seizoen:</strong>
+                        <span><div ng-repeat="season in tostie.season">{{season}} </div></span>
+                    </div>
+                    <div class="col-lg-2 col-sm-2">
+                        <button type="button" class="btn btn-primary" ng-click="tostieOverview(tostie)"><i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" ng-click="deleteTostie(tostie.name)">x
+                        </button>
+                        <button type="button" class="btn btn-info" ng-click="updateTostieInit(tostie)"><i class="fa fa-wrench" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <hr class="hidden-sm hidden-md hidden-lg">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Modal Add tostie -->
+    <div id="add-tostie" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form ng-submit="saveNewTostie()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Tostie Toevoegen.</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="ingredient-name-input">Naam:</label>
+                            <input id="ingredient-name-input" type="text" class="form-control" placeholder="Naam"
+                                   ng-model="newTostie.name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Seizoen:</label>
+                            <div ng-repeat="season in tostieSeason track by $index" class="col-sm-12 col-lg-12">
+                                <input type="checkbox" ng-model="season.selected" value="{{season.name}}">{{season.name}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ingredienten:</label>
+                            <div ng-repeat="ingredient in ingredients track by $index" class="col-sm-12 col-lg-12">
+                                <input type="checkbox" ng-model="ingredient.selected" value="{{ingredient.name}}">{{ingredient.name}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Saus:</label>
+                            <div ng-repeat="saus in sauce track by $index" class="col-sm-12 col-lg-12">
+                                <input type="checkbox" ng-model="saus.selected" value="{{saus.name}}">{{saus.name}}
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                            <button type="submit" class="btn btn-success">Opslaan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--End ingredient part-->
+
+    <!-- Modal update Ingredient -->
+    <div id="update-tostie" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form ng-submit="updateTostie()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Ingredient</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="ingredient-name-update-input">Naam:</label>
+                            <input id="ingredient-name-update-input" type="text" class="form-control"
+                                   placeholder="Naam"
+                                   ng-model="updateTostieElement.name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Seizoen:</label>
+                            <div ng-repeat="season in tostieSeason track by $index" class="col-sm-12 col-lg-12">
+                                <input type="checkbox" ng-model="season.selected" value="{{season.name}}">{{season.name}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ingredienten:</label>
+                            <div ng-repeat="ingredient in ingredients track by $index" class="col-sm-12 col-lg-12">
+                                <input type="checkbox" ng-model="ingredient.selected" value="ingredients.selected">{{ingredient.name}} {{ingredient.selected}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Saus:</label>
+                            <div ng-repeat="saus in sauce track by $index" class="col-sm-12 col-lg-12">
+                                <input type="checkbox" ng-model="saus.selected" value="saus.selected">{{saus.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                            <button type="submit" class="btn btn-success">Opslaan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Overzicht Tostie -->
+<div id="preview-tostie" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{tostiePreview.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12 col-sm-12">
+                        Ingredienten:<br/>
+                    </div>
+                    <div class="col-lg-12 col-sm-12">
+                        Sausen:<br>
+                    </div>
+                    Seizoenen:<br>
+
+                    <div class="col-lg-12 col-sm-12">
+                        <h4>Reviews</h4>
+                        <hr>
+                        <div id="overview-reviews">
+                            <div id="review-input">
+                                <form id="review-create" ng-submit="saveTostieReview(tostiePreview.name)">
+                                    <div class="form-group">
+                                        <input type="hidden" value="{{tostiePreview.name}}"
+                                               ng-model="newReview.tostie">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-sm-2">
+                                                <label for="review-name-update-input">Naam:</label>
+                                            </div>
+                                            <div class="col-lg-10 col-sm-10">
+                                                <input id="review-name-update-input" type="text" class="form-control"
+                                                       placeholder="Naam"
+                                                       ng-model="newReview.name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                        <div class="col-lg-2 col-sm-2">
+                                            <label for="review-message-update-input">Bericht:</label>
+                                        </div>
+                                        <div class="col-lg-10 col-sm-10">
+                                            <input id="review-message-update-input" type="text" class="form-control"
+                                                   placeholder="Bericht"
+                                                   ng-model="newReview.bericht" required>
+                                            <input type="hidden" ng-model="newReview.tostie" value="{{tostiePreview.name}}">
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-sm-2">
+                                                <label for="review-rating-update-input">Score:</label>
+                                            </div>
+                                            <div class="col-lg-10 col-sm-10">
+                                                <input id="review-rating-update-input" type="number" class="form-control"
+                                                       placeholder="Score"
+                                                       ng-model="newReview.sterren" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Opslaan</button>
+                                </form>
+                            </div>
+                            <div class="well" ng-repeat="review in tostiePreview.reviews">
+                                Reviewer: {{review.plaatser}}<br/>
+                                Bericht:<br/> {{review.bericht}}<br/>
+                                Score: {{review.Sterren}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                        <button type="submit" class="btn btn-success">Opslaan</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!--End ingredient part-->
+<script type="text/javascript">
+    $('#add-ingredient').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('#update-ingredient').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#add-ingredient').modal('hide');
+    $('#update-ingredient').modal('hide');
+</script>
