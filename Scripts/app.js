@@ -8,11 +8,11 @@ app.config(function($routeProvider, $locationProvider) {
             controller: "IngredientController"
         })
         .when("/sauce", {
-            templateUrl : "views/sauce.html",
+            templateUrl : "Views/sauce.html",
             controller: "SauceController"
         })
         .when("/tosties", {
-            templateUrl : "views/tostie.html",
+            templateUrl : "Views/tostie.html",
             controller: "TostieController"
         })
         .otherwise({
