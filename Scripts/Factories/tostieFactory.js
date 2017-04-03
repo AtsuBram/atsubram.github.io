@@ -3,7 +3,7 @@ app.factory('TostieFactory', function(){
     function getAllTosties(){
         var localTosties = JSON.parse(localStorage.getItem("tosties"));
         //Check if local ingredients existed
-        if(localTosties == undefined || localTosties.length <= 0){
+        if(localTosties == undefined || localTosties.length < 0){
             localTosties = [
                 {"name":"Normal", "ingredients": ["Ham", "Goudse Cheese", "White bread"], "sauce": ["Ketchup"], "season": ["winter", "summer"], "reviews":[]},
                 {"name":"Tropical", "ingredients": ["Ham", "Goudse Cheese", "Sesame white bread", "Pineapple pieces"], "sauce": ["Ketchup", "butter"], "season": ['summer'], "reviews":[]},

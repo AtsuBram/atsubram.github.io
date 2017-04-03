@@ -3,7 +3,7 @@ app.factory('IngredientFactory', function(){
     function getAllIngredients(){
         var localIngredients = JSON.parse(localStorage.getItem("ingredients"));
         //Check if local ingredients existed
-        if(localIngredients == undefined || localIngredients.length <= 0){
+        if(localIngredients == undefined || localIngredients.length < 0){
             localIngredients = [
                 {name:"ham", description:"Ham is meat from a pork.", category: "meat" },
                 {name:"Goudse cheese", description:"Cheese is made from milk from gouda.", category: "cheese" },
