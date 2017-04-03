@@ -21,7 +21,7 @@
                     </div>
                     <hr>
                 </div>
-                <div class="row ingredient-row" ng-repeat="ingredien in ingredients">
+                <div class="row ingredient-row" ng-repeat="ingredien in ingredients track by $index">
                     <div class="col-lg-3 col-sm-3">
                         <strong class="hidden-sm hidden-md hidden-lg">Naam:</strong>
                         <span>{{ingredien.name}}</span>
